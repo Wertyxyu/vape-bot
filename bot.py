@@ -1,39 +1,60 @@
 import telebot
 import json
+import os
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
+from flask import Flask
+import threading
 
-# ВСТАВЬТЕ ВАШ ТОКЕН ОТ BOTFATHER (в кавычках)
-TOKEN = '9280671675:AAHZhECeDRH1OjhNT2ueIT2rEnaksH1Go8Y'
-
-# ВСТАВЬТЕ ВАШ ID (число без кавычек)
-ADMIN_ID =  8688469208 
+# ==========================================
+# ВАШИ ДАННЫЕ
+TOKEN = os.getenv('9280671675:AAHZhECeDRH1OjhNT2ueIT2rEnaksH1Go8Y')
+ADMIN_ID = 8688469208  # ВСТАВЬТЕ СВОЙ ID ОТ @userinfobot
+# ==========================================
 
 bot = telebot.TeleBot(TOKEN)
+app = Flask(__name__)
 
+# 1. Обработчик заказов из Mini App
 @bot.message_handler(content_types=['web_app_data'])
 def handle_order(message):
     try:
-        # Получаем данные от Mini App
         data = json.loads(message.web_app_data.data)
-        
-        # Формируем текст для админа
         text = f"🚨 **НОВЫЙ ЗАКАЗ!**\n\n"
         text += f"👤 От: {message.from_user.first_name} (@{message.from_user.username})\n"
-        text += f"🆔 ID клиента: `{message.from_user.id}`\n\n"
         text += f"🛒 **Товары:**\n"
         for item in data['items']:
             text += f"• {item}\n"
-        
         text += f"\n💰 **Сумма:** {data['total']} ₽\n"
         text += f"🏷 **Промокод:** {data['promo']}"
-        
-        # Отправляем сообщение вам
         bot.send_message(ADMIN_ID, text, parse_mode='Markdown')
-        
-        # Отправляем ответ клиенту
-        bot.send_message(message.chat.id, "✅ Ваш заказ принят! Админ свяжется с вами.")
-        
+        bot.send_message(message.chat.id, "✅ Ваш заказ принят!")
     except Exception as e:
-        bot.send_message(message.chat.id, "❌ Ошибка при обработке заказа.")
+        print(f"Ошибка: {e}")
 
-print("Бот-админ запущен и ждет заказов...")
-bot.infinity_polling()
+# 2. Команда /shop
+@bot.message_handler(commands=['shop'])
+def send_shop_button(message):
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    # ВСТАВЬТЕ СЮДА ССЫЛКУ НА ВАШ МАГАЗИН
+    web_app = WebAppInfo(url="https://wertyxyu.github.io/my-app/")
+    markup.add(KeyboardButton(text="🛒 Открыть магазин", web_app=web_app))
+    bot.send_message(message.chat.id, "Нажмите кнопку ниже:", reply_markup=markup)
+
+# 3. Запуск бота в фоне
+def run_bot():
+    print("Бот запущен...")
+    bot.infinity_polling()
+
+# 4. Заглушка для веб-сервера (чтобы Render дал бесплатный тариф)
+@app.route('/')
+def index():
+    return "Bot is running!"
+
+if __name__ == '__main__':
+    # Запускаем бота
+    t = threading.Thread(target=run_bot)
+    t.start()
+    
+    # Запускаем веб-сервер
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)

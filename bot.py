@@ -7,7 +7,7 @@ import threading
 
 # ==========================================
 # ВАШИ ДАННЫЕ
-TOKEN = os.getenv('9280671675:AAHZhECeDRH1OjhNT2ueIT2rEnaksH1Go8Y')
+TOKEN = '9280671675:AAHZhECeDRH1OjhNT2ueIT2rEnaksH1Go8Y'  # Ваш настоящий токен
 ADMIN_ID = 8688469208   # ВСТАВЬТЕ СВОЙ ID ОТ @userinfobot
 # ==========================================
 

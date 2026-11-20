@@ -30,6 +30,10 @@ def handle_order(message):
     except Exception as e:
         print(f"Ошибка: {e}")
 
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "👋 Добро пожаловать в Wer/Shop!\n\nЧтобы открыть магазин, напишите /shop или нажмите на кнопку меню ниже.")
+    
 @bot.message_handler(commands=['shop'])
 def send_shop_button(message):
     markup = ReplyKeyboardMarkup(resize_keyboard=True)

@@ -7,7 +7,7 @@ import threading
 
 # ==========================================
 # ВАШИ ДАННЫЕ
-TOKEN = os.getenv('BOT_TOKEN')
+TOKEN = '9280671675:AAED5ht4vexiX3NhxPQkSNYkWz71CD4x-h8'
 
 ADMIN_ID =  8688469208
 # ==========================================

@@ -7,8 +7,9 @@ import threading
 
 # ==========================================
 # ВАШИ ДАННЫЕ
-TOKEN = os.getenv('9280671675:AAED5ht4vexiX3NhxPQkSNYkWz71CD4x-h8')  # В кавычках
-ADMIN_ID = 8688469208               # Число без кавычек
+TOKEN = os.getenv('9280671675:AAED5ht4vexiX3NhxPQkSNYkWz71CD4x-h8') 
+
+ADMIN_ID =  8688469208
 # ==========================================
 
 bot = telebot.TeleBot(TOKEN)

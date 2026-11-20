@@ -7,7 +7,7 @@ import threading
 
 # ==========================================
 # ВАШИ ДАННЫЕ
-TOKEN = '9280671675:AAHZhECeDRH1OjhNT2ueIT2rEnaksH1Go8Y'  # В кавычках
+TOKEN = '9280671675:AAGb1mpbZ3yUkQyx74QAlGPLhF85R0SeiRw'  # В кавычках
 ADMIN_ID = 8688469208               # Число без кавычек
 # ==========================================
 

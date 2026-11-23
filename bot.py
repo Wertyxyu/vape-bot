@@ -1,3 +1,4 @@
+from telebot.apihelper import ApiTelegramException
 import telebot
 import json
 import os
@@ -9,10 +10,21 @@ import threading
 # ВАШИ ДАННЫЕ
 TOKEN = os.getenv('BOT_TOKEN')
 
-ADMIN_ID =  8688469208
+ADMIN_ID =  9138028220
 # ==========================================
 
 bot = telebot.TeleBot(TOKEN)
+# ВСТАВЬ СЮДА ЮЗЕРНЕЙМ ТВОЕГО КАНАЛА (например, '@gustoy_batya_channel')
+CHANNEL_ID = '@Gustoy_Batya'
+
+def check_subscription(user_id):
+    try:
+        member = bot.get_chat_member(CHANNEL_ID, user_id)
+        if member.status in ('left', 'kicked'):
+            return False
+        return True
+    except Exception:
+        return False
 app = Flask(__name__)
 
 @bot.message_handler(content_types=['web_app_data'])
@@ -33,6 +45,12 @@ def handle_order(message):
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+    # Проверяем подписку
+    if not check_subscription(message.from_user.id):
+        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: " + CHANNEL_ID)
+        return # Если не подписан — дальше не идем
+        
+    # Если подписан — показываем приветствие
     bot.reply_to(message, "👋 Добро пожаловать в Gustoy_Batya!\n\nЧтобы открыть магазин, напишите /shop или нажмите на кнопку меню ниже.")
     
 @bot.message_handler(commands=['shop'])

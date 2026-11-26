@@ -13,7 +13,7 @@ ADMIN_ID = 9138028220  # ВСТАВЬ СВОЙ ID
 # ==========================================
 
 bot = telebot.TeleBot(TOKEN)
-CHANNEL_ID = '@Gustoy_Batya'
+CHANNEL_ID = '-1004283491337'
 
 def check_subscription(user_id):
     try:

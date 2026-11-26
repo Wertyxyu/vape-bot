@@ -46,7 +46,7 @@ def handle_order(message):
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     if not check_subscription(message.from_user.id):
-        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: https://t.me/Gustoy_Batya")
+        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: https://t.me/Gustoy_Batua")
         return
         
     bot.reply_to(message, "👋 Добро пожаловать в Gustoy_Batya!\n\nЧтобы открыть магазин, напишите /shop или нажмите на кнопку меню ниже.")

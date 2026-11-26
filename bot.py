@@ -54,7 +54,7 @@ def send_welcome(message):
 @bot.message_handler(commands=['shop'])
 def send_shop_button(message):
     if not check_subscription(message.from_user.id):
-        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: " + CHANNEL_ID)
+        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: https://t.me/Gustoy_Batya")
         return
     
     markup = ReplyKeyboardMarkup(resize_keyboard=True)

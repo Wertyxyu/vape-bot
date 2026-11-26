@@ -15,7 +15,7 @@ ADMIN_ID =  9138028220
 
 bot = telebot.TeleBot(TOKEN)
 # ВСТАВЬ СЮДА ЮЗЕРНЕЙМ ТВОЕГО КАНАЛА (например, '@gustoy_batya_channel')
-CHANNEL_ID = '@Gustoy_Batya'
+CHANNEL_ID = 'https://t.me/Gustoy_Batua'
 
 def check_subscription(user_id):
     try:

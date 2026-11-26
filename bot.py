@@ -15,7 +15,7 @@ ADMIN_ID =  9138028220
 
 bot = telebot.TeleBot(TOKEN)
 # ВСТАВЬ СЮДА ЮЗЕРНЕЙМ ТВОЕГО КАНАЛА (например, '@gustoy_batya_channel')
-CHANNEL_ID = 'https://t.me/Gustoy_Batua'
+CHANNEL_ID = '@Gustoy_Batya'
 
 def check_subscription(user_id):
     try:
@@ -49,7 +49,7 @@ def handle_order(message):
 def send_welcome(message):
     # Проверяем подписку
     if not check_subscription(message.from_user.id):
-        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: " + CHANNEL_ID)
+       bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: https://t.me/Gustoy_Batya")
         return # Если не подписан — дальше не идем
         
     # Если подписан — показываем приветствие

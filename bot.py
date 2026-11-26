@@ -15,7 +15,7 @@ ADMIN_ID =  9138028220
 
 bot = telebot.TeleBot(TOKEN)
 # ВСТАВЬ СЮДА ЮЗЕРНЕЙМ ТВОЕГО КАНАЛА (например, '@gustoy_batya_channel')
-CHANNEL_ID = 'https://t.me/Gustoy_Batua'
+CHANNEL_ID = '@Gustoy_Batya'
 
 def check_subscription(user_id):
     try:
@@ -23,7 +23,9 @@ def check_subscription(user_id):
         if member.status in ('left', 'kicked'):
             return False
         return True
-    except Exception:
+    except Exception as e:
+        # Эта строка выведет ошибку в логи Render, чтобы мы поняли, почему не работает
+        print(f"ОШИБКА ПРОВЕРКИ: {e}") 
         return False
 app = Flask(__name__)
 

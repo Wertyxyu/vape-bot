@@ -55,6 +55,12 @@ def send_welcome(message):
     
 @bot.message_handler(commands=['shop'])
 def send_shop_button(message):
+    # Проверяем подписку ПЕРЕД тем, как дать кнопку
+    if not check_subscription(message.from_user.id):
+        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: " + CHANNEL_ID)
+        return # Если не подписан — кнопку НЕ даем, выходим
+    
+    # Если подписан — даем кнопку
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     web_app = WebAppInfo(url="https://wertyxyu.github.io/my-app/")
     markup.add(KeyboardButton(text="🛒 Открыть магазин", web_app=web_app))

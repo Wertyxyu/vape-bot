@@ -9,12 +9,10 @@ import threading
 # ==========================================
 # ВАШИ ДАННЫЕ
 TOKEN = os.getenv('BOT_TOKEN')
-
-ADMIN_ID =  9138028220
+ADMIN_ID = 9138028220  # ВСТАВЬ СВОЙ ID
 # ==========================================
 
 bot = telebot.TeleBot(TOKEN)
-# ВСТАВЬ СЮДА ЮЗЕРНЕЙМ ТВОЕГО КАНАЛА (например, '@gustoy_batya_channel')
 CHANNEL_ID = '@Gustoy_Batya'
 
 def check_subscription(user_id):
@@ -24,9 +22,9 @@ def check_subscription(user_id):
             return False
         return True
     except Exception as e:
-        # Эта строка выведет ошибку в логи Render, чтобы мы поняли, почему не работает
         print(f"ОШИБКА ПРОВЕРКИ: {e}") 
         return False
+
 app = Flask(__name__)
 
 @bot.message_handler(content_types=['web_app_data'])
@@ -47,22 +45,18 @@ def handle_order(message):
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    # Проверяем подписку
     if not check_subscription(message.from_user.id):
-       bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: https://t.me/Gustoy_Batya")
-        return # Если не подписан — дальше не идем
+        bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: https://t.me/Gustoy_Batya")
+        return
         
-    # Если подписан — показываем приветствие
     bot.reply_to(message, "👋 Добро пожаловать в Gustoy_Batya!\n\nЧтобы открыть магазин, напишите /shop или нажмите на кнопку меню ниже.")
     
 @bot.message_handler(commands=['shop'])
 def send_shop_button(message):
-    # Проверяем подписку ПЕРЕД тем, как дать кнопку
     if not check_subscription(message.from_user.id):
         bot.reply_to(message, "👋 Привет! Чтобы получить доступ к магазину, подпишись на наш канал: " + CHANNEL_ID)
-        return # Если не подписан — кнопку НЕ даем, выходим
+        return
     
-    # Если подписан — даем кнопку
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     web_app = WebAppInfo(url="https://wertyxyu.github.io/my-app/")
     markup.add(KeyboardButton(text="🛒 Открыть магазин", web_app=web_app))
